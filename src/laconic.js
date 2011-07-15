@@ -65,12 +65,14 @@
   // Object describing the explicit laconic methods that should be added
   // to the $el namespace
   var laconic = {
-    stack : function() {
-      // TODO
-    },
-
-    flow : function() {
-      // TODO
+    registerTag : function(name, renderer) {
+      if(!$el[name]) {
+        $el[name] = function() {
+          var el = gen('div', {'class' : name});
+          renderer.apply(el, Array.prototype.slice.call(arguments));
+          return el;
+        };
+      }
     }
   };
 
