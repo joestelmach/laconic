@@ -1,4 +1,4 @@
-Laconic is a lightweight approach of adding some sanity to the
+Laconic is a lightweight approach to adding some sanity to the
 process of generating DOM content in JavaScript.
 
 Consider using the standard DOM API to build and insert a simple table:
@@ -6,7 +6,7 @@ Consider using the standard DOM API to build and insert a simple table:
       var firstTh = document.createElement('th');
       firstTh.appendChild(document.createTextNode('first name'));
       var secondTh = document.createElement('th');
-      secondTh.appendChild(document.createTextNode('first name'));
+      secondTh.appendChild(document.createTextNode('last name'));
       var firstTr = document.createElement('tr');
       firstTr.appendChild(firstTh);
       firstTr.appendChild(secondTh);

@@ -47,19 +47,16 @@
       }
     }
 
-    // Add the appendTo method to the newly created element, which will allow
+    // Add an appendTo method to the newly created element, which will allow
     // the DOM insertion to be method chained to the creation.  For example:
     // $el.div('foo').appendTo(document.body);
-    el.appendTo = appendTo;
+    el.appendTo = function(parentNode) {
+      if(parentNode.nodeType === 1 && this.nodeType === 1) {
+        parentNode.appendChild(this);
+      }
+    };
     
     return el;
-  };
-
-  // Generic function that appends the invoked object to the given parent node 
-  var appendTo = function(parentNode) {
-    if(parentNode.nodeType === 1 && this.nodeType === 1) {
-      parentNode.appendChild(this);
-    }
   };
 
   // Object describing the explicit laconic methods that should be added
