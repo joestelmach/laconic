@@ -41,6 +41,7 @@ hierarchy of known elements.  You just need to provide a name for
 your tag, and a function that appends content to 'this', which is a
 reference to the root node of the tag.  For example, the 'foo' tag
 will produce the following content:
+
     <div class='foo'>
       <div>bar</div>
       <div>baz</div>
