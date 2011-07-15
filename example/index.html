@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>Backbone UI</title>
+
+    <script src="../src/laconic.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      
+      $el.table(
+        $el.tr(
+          $el.th('first name'),
+          $el.th('last name')),
+        $el.tr(
+          $el.td('Joe'),
+          $el.td('Stelmach'))
+      ).appendTo(document.body);
+
+      var firstTh = document.createElement('th');
+      firstTh.appendChild(document.createTextNode('first name'));
+      var secondTh = document.createElement('th');
+      secondTh.appendChild(document.createTextNode('first name'));
+      var firstTr = document.createElement('tr');
+      firstTr.appendChild(firstTh);
+      firstTr.appendChild(secondTh);
+      var firstTd = document.createElement('td'); 
+      firstTd.appendChild(document.createTextNode('Joe'));
+      var secondTd = document.createElement('td'); 
+      secondTd.appendChild(document.createTextNode('Stelmach'));
+      var secondTr = document.createElement('tr');
+      secondTr.appendChild(firstTd);
+      secondTr.appendChild(secondTd);
+      var table = document.createElement('table');
+      table.appendChild(firstTr);
+      table.appendChild(secondTr);
+      document.body.appendChild(table);
+
+    </script>
+  </body>
+</html>
+
