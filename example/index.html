@@ -34,13 +34,13 @@
       document.body.appendChild(table);
       
       // now let's take a look at how to build the same table laconically;
-      $el.table(
-        $el.tr(
-          $el.th('first name'),
-          $el.th('last name')),
-        $el.tr(
-          $el.td('Joe'),
-          $el.td('Stelmach'))
+      el.table(
+        el.tr(
+          el.th('first name'),
+          el.th('last name')),
+        el.tr(
+          el.td('Joe'),
+          el.td('Stelmach'))
       ).appendTo(document.body);
 
       // A function exists in the $el namespace for all HTML tags listed here:
@@ -55,13 +55,13 @@
       //   <div>bar</div>
       //   <div>baz</div>
       // </div>
-      $el.registerTag('foo', function() {
-        this.appendChild($el.div('bar'));
-        this.appendChild($el.div('baz'));
+      el.registerTag('foo', function() {
+        this.appendChild(el.div('bar'));
+        this.appendChild(el.div('baz'));
       });
 
       // Once you've registered a tag, you can start inserting them:
-      $el.foo().appendTo(document.body);
+      el.foo().appendTo(document.body);
 
     </script>
   </body>

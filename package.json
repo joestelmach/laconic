@@ -1,0 +1,13 @@
+{
+  "name": "laconic",
+  "description": "dom sanity",
+  "version": "0.0.0",
+  "homepage": "http://joestelmach.github.com/laconic",
+  "authors": ["Joe Stelmach <joestelmach@gmail.com>"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joestelmach/laconic.git"
+  },
+  "main": "./src/laconic.js",
+  "ender": "./src/ender.js"
+}

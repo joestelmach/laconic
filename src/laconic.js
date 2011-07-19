@@ -1,5 +1,5 @@
 // Laconic simplifies the generation of DOM content.
-(function() {
+!function(context) {
 
   // Generic function for generating a dom element.
   //
@@ -14,7 +14,7 @@
   // 
   // for example:
   // gen('div', {'class' : 'foo'}, 'bar');
-  var gen = function() {
+  function gen() {
     // create a new element of the requested type
     var tagName = arguments.length === 0 ? 'div' : arguments[0];
     var el = document.createElement(tagName);
@@ -54,17 +54,19 @@
       if(parentNode.nodeType === 1 && this.nodeType === 1) {
         parentNode.appendChild(this);
       }
+      return this;
     };
     
     return el;
-  };
+  }
 
-  // Object describing the explicit laconic methods that should be added
-  // to the $el namespace
+  // Create the laconic object which describes the external interface
   var laconic = {
+
+    // registers a new tag
     registerTag : function(name, renderer) {
-      if(!$el[name]) {
-        $el[name] = function() {
+      if(!laconic[name]) {
+        laconic[name] = function() {
           var el = gen('div', {'class' : name});
           renderer.apply(el, Array.prototype.slice.call(arguments));
           return el;
@@ -74,12 +76,12 @@
   };
 
   // list of html 4 tags not valid in html 5 that should be added as methods 
-  // to the $el namespace
+  // to the laconic interface
   var deprecatedTags = ['acronym', 'applet', 'basefont', 'big', 'center', 'dir',
     'font', 'frame', 'frameset', 'noframes', 'strike', 'tt', 'u', 'xmp'];
 
   // list all valid html 5 tags that should be added as methods to the
-  // $el namespace, as well as the above deprecated tags
+  // laconic namespace, as well as the above deprecated tags
   var tags = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b',
     'base', 'bdo', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption',
     'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del',
@@ -94,21 +96,26 @@
     'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr',
     'ul', 'var', 'video', 'wbr'].concat(deprecatedTags);
 
-  // create the laconic $el namespace
-  window.$el = window.$el || {};
-
-  // add our laconic methods to the $el namespace 
-  for(var key in laconic) {
-    window.$el[key] = laconic[key];
-  }
-
-  // add our tag methods to the $el namespace 
+  // add our tag methods to the laconic object 
   for(var i=0; i<tags.length; i++) {
-    $el[tags[i]] = (function(tagName) {
+    laconic[tags[i]] = (function(tagName) {
       return function() {
         return gen.apply(this, 
           [tagName].concat(Array.prototype.slice.call(arguments)));
       };
     })(tags[i]);
   }
-})();
+
+  // If we're in a CommonJS environment, we export our laconic methods
+  if(typeof module !== 'undefined' && module.exports) {
+    module.exports = laconic;
+  } 
+
+  // otherwise, we attach them to the top level $.el namespace
+  else {
+    var dollar = context['$'] || {};
+    dollar['el'] = laconic;
+    context['$'] = dollar;
+  }
+  
+}(this);
