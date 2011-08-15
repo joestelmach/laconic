@@ -1,7 +1,8 @@
 // Laconic simplifies the generation of DOM content.
 !function(context) {
 
-  // Generic function for generating a dom element.
+  // The laconic function serves as a generic method for generating
+  // DOM content, and also as a placeholder for helper functions.
   //
   // The first parameter MUST be a string specifying the element's 
   // tag name.  
@@ -14,7 +15,7 @@
   // 
   // for example:
   // gen('div', {'class' : 'foo'}, 'bar');
-  function gen() {
+  function laconic() {
     // create a new element of the requested type
     var tagName = arguments.length === 0 ? 'div' : arguments[0];
     var el = document.createElement(tagName);
@@ -29,7 +30,17 @@
         el.appendChild(arg); 
       }
 
-      // if the argument is a string or a number, we create and append 
+      // if the argument is an array, we append each element
+      else if(Object.prototype.toString.call(arg) === '[object Array]') {
+        for(var j=0; j<arg.length; j++) {
+          var child = arg[j];
+          if(child.nodeType === 1) {
+            el.appendChild(child);
+          }
+        }
+      }
+
+      // if the argument is a string or a number, we append it as
       // a new text node
       else if(
           (!!(arg === '' || (arg && arg.charCodeAt && arg.substr))) ||
@@ -42,7 +53,16 @@
       // argument, then we apply the object's values as element attributes
       else if(i === 0 && typeof(arg) === 'object') {
         for(var key in arg) {
-          el.setAttribute(key, arg[key]);
+          var value = arg[key];
+          if(value !== null && value !== undefined) {
+            // IE classname nonsense
+            if(key.toLowerCase() === 'classname') {
+              el[key] = value;
+            }
+            else {
+              el.setAttribute(key, value);
+            }
+          }
         }
       }
     }
@@ -54,34 +74,27 @@
       if(parentNode.nodeType === 1 && this.nodeType === 1) {
         parentNode.appendChild(this);
       }
-      return this;
+      return el;
     };
     
     return el;
   }
 
-  // Create the laconic object which describes the external interface
-  var laconic = {
-
-    // registers a new tag
-    registerTag : function(name, renderer) {
-      if(!laconic[name]) {
-        laconic[name] = function() {
-          var el = gen('div', {'class' : name});
-          renderer.apply(el, Array.prototype.slice.call(arguments));
-          return el;
-        };
-      }
+  laconic.registerTag = function(name, renderer) {
+    if(!laconic[name]) {
+      laconic[name] = function() {
+        var el = laconic('div', {'class' : name});
+        renderer.apply(el, Array.prototype.slice.call(arguments));
+        return el;
+      };
     }
   };
 
-  // list of html 4 tags not valid in html 5 that should be added as methods 
-  // to the laconic interface
+  // list of html 4 tags 
   var deprecatedTags = ['acronym', 'applet', 'basefont', 'big', 'center', 'dir',
     'font', 'frame', 'frameset', 'noframes', 'strike', 'tt', 'u', 'xmp'];
 
-  // list all valid html 5 tags that should be added as methods to the
-  // laconic namespace, as well as the above deprecated tags
+  // list html 5 tags
   var tags = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b',
     'base', 'bdo', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption',
     'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del',
@@ -100,7 +113,7 @@
   for(var i=0; i<tags.length; i++) {
     laconic[tags[i]] = (function(tagName) {
       return function() {
-        return gen.apply(this, 
+        return laconic.apply(this, 
           [tagName].concat(Array.prototype.slice.call(arguments)));
       };
     })(tags[i]);
@@ -119,3 +132,4 @@
   }
   
 }(this);
+
