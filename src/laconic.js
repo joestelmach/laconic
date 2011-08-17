@@ -24,6 +24,7 @@
     var args = Array.prototype.slice.call(arguments, 1);
     for(var i=0; i<args.length; i++) {
       var arg = args[i];
+      if(arg === null || arg === undefined) continue;
 
       // if the argument is a dom node, we simply append it
       if(arg.nodeType === 1) {
