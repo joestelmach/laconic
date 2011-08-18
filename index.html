@@ -12,9 +12,9 @@
 
       body pre code {
         display:block;
-        background-color:#eff;
+        background-color:#eee;
         padding:10px;
-        border:1px solid #eee;
+        border:1px solid #aaa;
         border-radius:4px;
         -webkit-border-radius:4px;
         -moz-border-radius:4px;
@@ -32,7 +32,8 @@
   <body>
     <h1>Laconic</h1>
     <p>
-      Laconic is a lightweight approach to generating DOM content in JavaScript.
+      Laconic is a lightweight approach to generating DOM content in JavaScript.  The 
+      source code is available on <a href='https://github.com/joestelmach/laconic'>GitHub</a>.
     </p>
 
     <p>
@@ -75,7 +76,7 @@ document.body.appendChild(table);
 </code></pre>
 
     <p>
-      Laconic works by adding a method to the $.el namespace for all known 
+      Laconic adds a method to the $.el namespace for all known 
       <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/section-index.html#elements-1">HTML tags</a>.  These methods should be invoked with a variable length list of child elements or strings. An optional attributes object may be passed as the first argument.  For example:
     </p>
 <pre><code class='language-javascript'>$.el.div({'class' : 'foo'}, $.el.div('bar'));</code></pre>
