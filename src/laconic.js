@@ -56,9 +56,21 @@
         for(var key in arg) {
           var value = arg[key];
           if(value !== null && value !== undefined) {
+            var isEvent = key.substring(0, 2).toLowerCase() === 'on';
+
+            // if the key represents an event (onclick, onchange, etc) we'd
+            // like to support any case (onClick for example), and set our href
+            // to '#' if none is given
+            if(isEvent) {
+              key = key.toLowerCase();
+              if(key === 'onclick' && arg.href === undefined) {
+                el.setAttribute('href', '#');
+              }
+            }
+
             // If we're setting a dom event, or the not-so-ie-supported classname
-            // attribuet, we add the value as a direct property of the element
-            if(key.substring(0, 2).toLowerCase() === 'on' || key.toLowerCase() === 'classname') {
+            // attribute, we add the value as a direct property of the element
+            if(isEvent || key.toLowerCase() === 'classname') {
               el[key] = value;
             }
 
