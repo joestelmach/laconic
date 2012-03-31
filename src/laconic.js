@@ -1,6 +1,5 @@
 // Laconic simplifies the generation of DOM content.
 !function(context) {
-
   // The laconic function serves as a generic method for generating
   // DOM content, and also as a placeholder for helper functions.
   //
@@ -57,6 +56,7 @@
           var value = arg[key];
           if(value !== null && value !== undefined) {
             var isEvent = key.substring(0, 2).toLowerCase() === 'on';
+            var isStyle = key.toLowerCase() === 'style';
 
             // if the key represents an event (onclick, onchange, etc) we'd
             // like to support any case (onClick for example), and set our href
@@ -68,9 +68,15 @@
               }
             }
 
+            // if we're setting the style attribute, we may need to 
+            // use the cssText property
+            if(isStyle && el.style.setAttribute) {
+              el.style.setAttribute('cssText', value);
+            }
+
             // If we're setting a dom event, or the not-so-ie-supported classname
             // attribute, we add the value as a direct property of the element
-            if(isEvent || key.toLowerCase() === 'classname') {
+            else if(isEvent || key.toLowerCase() === 'classname') {
               el[key] = value;
             }
 
