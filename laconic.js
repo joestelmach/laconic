@@ -19,6 +19,7 @@
     'for'             : 'htmlFor',
     frameborder       : 'frameBorder',
     hspace            : 'hSpace',
+    htmlfor           : 'htmlFor',
     longdesc          : 'longDesc',
     maxlength         : 'maxLength',
     marginwidth       : 'marginWidth',
@@ -81,12 +82,14 @@
               key = attributeMap[key] || key;
 
               // if the key represents an event (onclick, onchange, etc)
-              // we'll set the href to '#' as a convenience.
+              // we'll set the href to '#' if none is given, and we'll apply
+              // the attribute directly to the element for IE7 support.
               var isEvent = key.charAt(0) === 'o' && key.charAt(1) === 'n';
               if(isEvent) {
                 if(arg.href === undefined && key === 'onclick') {
                   el.setAttribute('href', '#');
                 }
+                el[key] = value;
               }
 
               // if we're setting the style attribute, we may need to 
@@ -95,9 +98,10 @@
                 el.style.setAttribute('cssText', value);
               }
 
-              // if we're setting an event handler or the className attribute,
-              // those need to be applied directly to the element
-              else if(isEvent || key === 'className') {
+              // if we're setting an attribute that's not properly supported 
+              // by IE7's setAttribute implementation, then we apply the 
+              // attribute directly to the element
+              else if(key === 'className' || key === 'htmlFor') {
                 el[key] = value;
               }
 

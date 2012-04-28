@@ -25,4 +25,22 @@ $(document).ready(function() {
       "style attribute may be specified with 'style' or 'cssText', and should be case-insensitive");
   });
 
+  test("for and type attribute", function() {
+    var results = [];
+
+    _(['for', 'htmlFor', 'FOR', 'HTMLFOR']).each(function(forName) {
+      var inputAttributes = {};
+      var input = $.el.input({type : 'text', name : 'foo'});
+
+      var labelAttributes = {};
+      labelAttributes[forName] = 'foo';
+      var label = $.el.label(labelAttributes);
+
+
+      equal(input.getAttribute('name'), 'foo');
+      equal(input.getAttribute('type'), 'text');
+
+      equal((label.getAttribute('for') || label.getAttribute('htmlFor')), 'foo');
+    });
+  });
 });
