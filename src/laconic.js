@@ -1,6 +1,37 @@
 // Laconic simplifies the generation of DOM content.
 (function(context) {
 
+  // properly-cased attribute names for IE setAttribute support
+  var attributeMap = {
+    acceptcharset     : 'acceptCharset',
+    accesskey         : 'accessKey',
+    allowtransparency : 'allowTransparency',
+    bgcolor           : 'bgColor',
+    cellpadding       : 'cellPadding',
+    cellspacing       : 'cellSpacing',
+    'class'           : 'className',
+    classname         : 'className',
+    colspan           : 'colSpan',
+    csstext           : 'style',
+    defaultchecked    : 'defaultChecked',
+    defaultselected   : 'defaultSelected',
+    defaultvalue      : 'defaultValue',
+    'for'             : 'htmlFor',
+    frameborder       : 'frameBorder',
+    hspace            : 'hSpace',
+    longdesc          : 'longDesc',
+    maxlength         : 'maxLength',
+    marginwidth       : 'marginWidth',
+    marginheight      : 'marginHeight',
+    noresize          : 'noResize',
+    noshade           : 'noShade',
+    readonly          : 'readOnly',
+    rowspan           : 'rowSpan',
+    tabindex          : 'tabIndex',
+    valign            : 'vAlign',
+    vspace            : 'vSpace'
+  };
+
   // The laconic function serves as a generic method for generating
   // DOM content, and also as a placeholder for helper functions.
   //
@@ -44,30 +75,33 @@
       else if(i === 1 && typeof(arg) === 'object') {
         for(var key in arg) {
           if(arg.hasOwnProperty(key)) {
-            key = key.toLowerCase();
             var value = arg[key];
             if(value !== null && value !== undefined) {
-              var isEvent = key.charAt(0) === 'o' && key.charAt(1) === 'n';
+              key = key.toLowerCase();
+              key = attributeMap[key] || key;
 
               // if the key represents an event (onclick, onchange, etc)
               // we'll set the href to '#' as a convenience.
-              if(isEvent && arg.href === undefined && key === 'onclick') {
-                el.setAttribute('href', '#');
+              var isEvent = key.charAt(0) === 'o' && key.charAt(1) === 'n';
+              if(isEvent) {
+                if(arg.href === undefined && key === 'onclick') {
+                  el.setAttribute('href', '#');
+                }
               }
 
               // if we're setting the style attribute, we may need to 
               // use the cssText property
-              if(key === 'style' && el.style.setAttribute) {
+              else if(key === 'style' && el.style.setAttribute) {
                 el.style.setAttribute('cssText', value);
               }
 
-              // If we're setting a dom event, or the not-so-ie-supported classname
-              // attribute, we add the value as a direct property of the element
-              else if(isEvent || key === 'classname') {
+              // if we're setting an event handler or the className attribute,
+              // those need to be applied directly to the element
+              else if(isEvent || key === 'className') {
                 el[key] = value;
               }
 
-              // otherwise, we set the value as an attribute
+              // otherwise, we use the standard setAttribute
               else {
                 el.setAttribute(key, value);
               }
@@ -154,7 +188,4 @@
     dollar.el = laconic;
     context.$ = dollar;
   }
-  
 }(this));
-
-
