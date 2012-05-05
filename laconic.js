@@ -182,8 +182,8 @@
   }
 
   // If we're in a CommonJS environment, we export our laconic methods
-  if(typeof window.module !== 'undefined' && window.module.exports) {
-    window.module.exports = laconic;
+  if(typeof module !== 'undefined' && module.exports) {
+    module.exports = laconic;
   } 
 
   // otherwise, we attach them to the top level $.el namespace
