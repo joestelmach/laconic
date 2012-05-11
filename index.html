@@ -106,7 +106,7 @@ document.body.appendChild(table);
       appends content to 'this', which is a reference to the root node.  For example:
     </p>
 
-<pre><code class='language-javascript'>$.el.registerTag('element', function(one, two) {
+<pre><code class='language-javascript'>$.el.registerElement('element', function(one, two) {
   this.appendChild($.el.div(one));
   this.appendChild($.el.div(two));
 });
@@ -115,15 +115,15 @@ document.body.appendChild(table);
       Once you've registered an element, you can start inserting it:
     </p>
 
-<pre><code class='language-javascript'>$.el.element('First', 'Second').appendTo(document.body);</code></pre>
+<pre><code class='language-javascript'>$.el.element('first', 'second').appendTo(document.body);</code></pre>
 
     <p>
       This particular invocation will produce the following structure:
     </p>
 
 <pre><code class='language-html'>&lt;div class='element'&gt;
-  &lt;div&gt;First&lt;/div&gt;
-  &lt;div&gt;Second&lt;/div&gt;
+  &lt;div&gt;first&lt;/div&gt;
+  &lt;div&gt;second&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 
