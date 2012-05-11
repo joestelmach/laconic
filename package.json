@@ -1,7 +1,7 @@
 {
   "name": "laconic",
   "description": "dom sanity",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "http://joestelmach.github.com/laconic",
   "authors": ["Joe Stelmach <joestelmach@gmail.com>"],
   "repository": {
