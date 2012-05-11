@@ -140,7 +140,7 @@
 
   // registers a new 'tag' that can be used to automate
   // the creation of a known element hierarchy
-  laconic.registerTag = function(name, renderer) {
+  laconic.registerElement= function(name, renderer) {
     if(!laconic[name]) {
       laconic[name] = function() {
         var el = laconic('div', {'class' : name});
