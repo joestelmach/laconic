@@ -163,11 +163,11 @@
     'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img',
     'input', 'ins', 'keygen', 'kbd', 'label', 'legend', 'li', 'link', 'map',
     'mark', 'menu', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol',
-    'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp',
-    'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small',
-    'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table',
-    'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr',
-    'ul', 'var', 'video', 'wbr'].concat(deprecatedTags);
+    'optgroup', 'option', 'output', 'p', 'picture', 'param', 'pre', 'progress', 
+    'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 
+    'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 
+    'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title',
+    'tr', 'ul', 'var', 'video', 'wbr'].concat(deprecatedTags);
 
   // add our tag methods to the laconic object 
   var makeApply = function(tagName) {
