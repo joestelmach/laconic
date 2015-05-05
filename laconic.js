@@ -132,7 +132,7 @@
       if(parentNode.nodeType === 1 && this.nodeType === 1) {
         parentNode.appendChild(this);
       }
-      return el;
+      return this;
     };
     
     return el;
